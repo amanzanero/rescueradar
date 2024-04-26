@@ -34,7 +34,7 @@ async function handler(_req: NextRequest) {
       promises.push(
         emailSender.send({
           to: email,
-          subject: "New kitties!",
+          subject: "New kitties! 🐱",
           html,
         }),
       );
