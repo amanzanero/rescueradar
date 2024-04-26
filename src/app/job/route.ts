@@ -16,14 +16,15 @@ async function handler(_req: NextRequest) {
   }
   console.log(`Fetched ${items.length} cats`);
 
-  const catNames = catData.items.map((item) => item.title);
+  const catPermalinks = catData.items.map((item) => item.permalink);
   // check if all cats exist in DB
   const cats = await db.query.pets.findMany({
-    where: (pets, { inArray }) => inArray(pets.name, catNames),
+    where: (pets, { inArray }) => inArray(pets.permalink, catPermalinks),
   });
   // filter out cats that already exist
   const newCats = catData.items.filter(
-    (cat) => !cats.some((existingCat) => existingCat.name === cat.title),
+    (cat) =>
+      !cats.some((existingCat) => existingCat.permalink === cat.permalink),
   );
 
   if (newCats.length > 0) {
@@ -52,9 +53,9 @@ async function handler(_req: NextRequest) {
         .onConflictDoNothing(),
     );
     await Promise.allSettled(promises);
-    console.log("New cats found and email sent");
+    console.log(`found ${newCats.length} new cats and sent emails`);
   } else {
-    console.log("No new cats found!");
+    console.log(`no new cats found`);
   }
 
   return NextResponse.json({ message: "ok" });

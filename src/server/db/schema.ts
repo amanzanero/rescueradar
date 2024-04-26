@@ -31,6 +31,6 @@ export const pets = createTable(
     updatedAt: timestamp("updatedAt"),
   },
   (table) => ({
-    nameIndex: index("name_idx").on(table.name),
+    permaLinkIndex: index("permalink_idx").on(table.permalink),
   }),
 );
