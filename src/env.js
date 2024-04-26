@@ -14,6 +14,8 @@ export const env = createEnv({
     SITE_PASSWORD: z.string(),
     QSTASH_URL: z.string().url(),
     QSTASH_TOKEN: z.string(),
+    EMAIL_USER: z.string(),
+    EMAIL_PASS: z.string(),
   },
 
   /**
@@ -35,6 +37,8 @@ export const env = createEnv({
     SITE_PASSWORD: process.env.SITE_PASSWORD,
     QSTASH_URL: process.env.QSTASH_URL,
     QSTASH_TOKEN: process.env.QSTASH_TOKEN,
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_PASS: process.env.EMAIL_PASS,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
