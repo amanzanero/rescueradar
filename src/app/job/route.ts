@@ -8,6 +8,14 @@ import { pets } from "@/server/db/schema";
 
 async function handler(_req: NextRequest) {
   const catData = await fetchCatData({ count: 20, page: 1 });
+  let items = [...catData.items];
+  // keep fetching until no more pages
+  for (let i = 2; i <= catData.pagination.maxPages; i++) {
+    const data = await fetchCatData({ count: 20, page: i });
+    items = [...items, ...data.items];
+  }
+  console.log(`Fetched ${items.length} cats`);
+
   const catNames = catData.items.map((item) => item.title);
   // check if all cats exist in DB
   const cats = await db.query.pets.findMany({
@@ -46,10 +54,10 @@ async function handler(_req: NextRequest) {
     await Promise.allSettled(promises);
     console.log("New cats found and email sent");
   } else {
-    console.log("No new cats found");
+    console.log("No new cats found!");
   }
 
-  return NextResponse.json({ name: "John Doe Serverless" });
+  return NextResponse.json({ message: "ok" });
 }
 
 export const POST =
