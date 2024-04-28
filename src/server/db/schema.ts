@@ -8,6 +8,7 @@ import {
   serial,
   timestamp,
   varchar,
+  boolean,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -32,5 +33,20 @@ export const pets = createTable(
   },
   (table) => ({
     permaLinkIndex: index("permalink_idx").on(table.permalink),
+  }),
+);
+
+export const users = createTable(
+  "users",
+  {
+    id: serial("id").primaryKey(),
+    email: varchar("email", { length: 256 }).unique().notNull(),
+    isEmailVerified: boolean("is_email_verified").default(false).notNull(),
+    verificationToken: varchar("verification_token", { length: 256 })
+      .unique()
+      .notNull(),
+  },
+  (table) => ({
+    emailIndex: index("email_idx").on(table.email),
   }),
 );
