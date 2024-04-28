@@ -1,14 +1,11 @@
 import {
   Body,
   Container,
-  Column,
   Head,
   Heading,
   Html,
-  Img,
   Link,
   Preview,
-  Row,
   Section,
   Text,
   render,
@@ -44,8 +41,8 @@ export const EmailConfirmation = ({ code }: EmailConfirmationProps) => (
         </Section>
 
         <Text style={text}>
-          If you didn&apos;t request this email, there's nothing to worry about,
-          you can safely ignore it.
+          If you didn&apos;t request this email, there&apos;s nothing to worry
+          about, you can safely ignore it.
         </Text>
       </Container>
     </Body>
@@ -62,10 +59,6 @@ const main = {
 const container = {
   margin: "0 auto",
   padding: "0px 20px",
-};
-
-const logoContainer = {
-  marginTop: "32px",
 };
 
 const h1 = {
