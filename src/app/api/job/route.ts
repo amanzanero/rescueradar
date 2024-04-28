@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { verifySignatureAppRouter } from "@upstash/qstash/dist/nextjs";
 import { env } from "@/env";
 import { fetchCatData } from "@/server/scraper";
-import { EmailSender, makeNewAnimalsEmail } from "@/server/email";
+import { GmailSender, makeNewAnimalsEmail } from "@/server/email";
 import { db } from "@/server/db";
 import { pets } from "@/server/db/schema";
 
@@ -13,7 +13,7 @@ async function handler(_req: NextRequest) {
   ]);
   if (newCats.length > 0) {
     console.log(`notifying ${usersToNotify.length} users`);
-    const emailSender = new EmailSender();
+    const emailSender = new GmailSender();
     const html = makeNewAnimalsEmail({ items: newCats });
     const promises: Promise<unknown>[] = [];
     usersToNotify.forEach((user) => {

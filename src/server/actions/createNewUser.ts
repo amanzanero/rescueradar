@@ -1,11 +1,10 @@
 "use server";
 import { z } from "zod";
 import { nanoid } from "nanoid";
-import { db } from "./db";
-import { users } from "./db/schema";
-import { logger } from "./logger";
-import { EmailSender } from "./email";
-import { makeConfirmationEmail } from "./email/confirmation";
+import { db } from "@/server/db";
+import { users } from "@/server/db/schema";
+import { logger } from "@/server/logger";
+import { GmailSender, makeConfirmationEmail } from "@/server/email";
 
 const createNewUserSchema = z.object({
   email: z.string().email(),
@@ -67,7 +66,7 @@ export const createNewUser: (
   }
   if (insertedUser && insertedUser.isEmailVerified === false) {
     // send email
-    const emailSender = new EmailSender();
+    const emailSender = new GmailSender();
     const html = makeConfirmationEmail({
       code: verificationToken,
     });

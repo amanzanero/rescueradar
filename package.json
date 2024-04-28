@@ -13,6 +13,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^14.2.3",
+    "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-email/components": "^0.0.16",
     "@react-email/render": "^0.0.12",
@@ -32,6 +34,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-email": "^2.1.1",
+    "resend": "^3.2.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.3"
@@ -58,5 +61,8 @@
   "ct3aMetadata": {
     "initVersion": "7.32.0"
   },
-  "packageManager": "pnpm@9.0.6"
+  "packageManager": "pnpm@9.0.6",
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }

@@ -3,7 +3,7 @@ import React from "react";
 
 export default function ConfirmationPage() {
   return (
-    <div className="flex min-h-[100dvh] flex-col">
+    <section className="flex flex-1 flex-col">
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-center text-3xl font-bold">
           Your email is confirmed!
@@ -15,6 +15,6 @@ export default function ConfirmationPage() {
           Back to home
         </Link>
       </div>
-    </div>
+    </section>
   );
 }
