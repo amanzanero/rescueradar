@@ -29,12 +29,17 @@ export const pets = createTable(
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
+    isAvailable: boolean("is_available").default(false).notNull(),
     updatedAt: timestamp("updatedAt"),
   },
   (table) => ({
     permaLinkIndex: index("permalink_idx").on(table.permalink),
+    isAvailableIndex: index("is_available_idx").on(table.isAvailable),
   }),
 );
+
+export type SelectPet = typeof pets.$inferSelect;
+export type InsertPet = typeof pets.$inferInsert;
 
 export const users = createTable(
   "users",
@@ -50,3 +55,6 @@ export const users = createTable(
     emailIndex: index("email_idx").on(table.email),
   }),
 );
+
+export type SelectUser = typeof users.$inferSelect;
+export type InsertUser = typeof users.$inferInsert;

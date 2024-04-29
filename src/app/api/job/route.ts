@@ -1,13 +1,14 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { verifySignatureAppRouter } from "@upstash/qstash/dist/nextjs";
 import { env } from "@/env";
-import { fetchCatData } from "@/server/scraper";
-import { GmailSender, makeNewAnimalsEmail } from "@/server/email";
 import { db } from "@/server/db";
 import { pets } from "@/server/db/schema";
+import { GmailSender, makeNewAnimalsEmail } from "@/server/email";
+import { fetchCatData } from "@/server/scraper";
+import { verifySignatureAppRouter } from "@upstash/qstash/dist/nextjs";
+import { and, eq, notInArray } from "drizzle-orm";
+import { NextResponse, type NextRequest } from "next/server";
 
 async function handler(_req: NextRequest) {
-  const [newCats, usersToNotify] = await Promise.all([
+  const [{ newCats, availableCats }, usersToNotify] = await Promise.all([
     fetchNewCats(),
     getUsersToNotify(),
   ]);
@@ -25,18 +26,8 @@ async function handler(_req: NextRequest) {
         }),
       );
     });
-    promises.push(
-      db
-        .insert(pets)
-        .values(
-          newCats.map((data) => ({
-            name: data.title,
-            permalink: data.permalink,
-            thumbnail: data.thumb,
-          })),
-        )
-        .onConflictDoNothing(),
-    );
+    promises.push(insertNewCats(newCats));
+    // mark cats that are no longer available as unavailable
     await Promise.allSettled(promises);
     console.log(
       `found ${newCats.length} new cats and sent ${usersToNotify.length} emails`,
@@ -46,6 +37,7 @@ async function handler(_req: NextRequest) {
       "not sending emails because there are no new cats to notify users about",
     );
   }
+  await markCatsAsUnavailable(availableCats.map((cat) => cat.permalink));
 
   return NextResponse.json({ message: "ok" });
 }
@@ -68,10 +60,14 @@ const fetchNewCats = async () => {
   console.log(
     `Fetched ${items.length} cats, of which ${cats.length} already exist`,
   );
-  return catData.items.filter(
+  const newCats = catData.items.filter(
     (cat) =>
       !cats.some((existingCat) => existingCat.permalink === cat.permalink),
   );
+  return {
+    newCats,
+    availableCats: items,
+  };
 };
 
 const getUsersToNotify = async () => {
@@ -80,6 +76,35 @@ const getUsersToNotify = async () => {
   });
   console.log(`found ${users.length} users to notify`);
   return users;
+};
+
+const insertNewCats = async (
+  newCats: Awaited<ReturnType<typeof fetchCatData>>["items"],
+) => {
+  await db
+    .insert(pets)
+    .values(
+      newCats.map((data) => ({
+        name: data.title,
+        permalink: data.permalink,
+        thumbnail: data.thumb,
+        is_available: true,
+      })),
+    )
+    .onConflictDoNothing();
+};
+
+const markCatsAsUnavailable = async (availableCatPermaLinks: string[]) => {
+  // mark all available cats as unavailable
+  await db
+    .update(pets)
+    .set({ isAvailable: false })
+    .where(
+      and(
+        eq(pets.isAvailable, true),
+        notInArray(pets.permalink, availableCatPermaLinks),
+      ),
+    );
 };
 
 export const POST =
