@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@next/bundle-analyzer':
-        specifier: ^14.2.3
-        version: 14.2.3
+        specifier: 14.2.2
+        version: 14.2.2
       '@radix-ui/react-progress':
         specifier: ^1.0.3
         version: 1.0.3(@types/react-dom@18.3.0)(@types/react@18.3.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -670,8 +670,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@next/bundle-analyzer@14.2.3':
-    resolution: {integrity: sha512-Z88hbbngMs7njZKI8kTJIlpdLKYfMSLwnsqYe54AP4aLmgL70/Ynx/J201DQ+q2Lr6FxFw1uCeLGImDrHOl2ZA==}
+  '@next/bundle-analyzer@14.2.2':
+    resolution: {integrity: sha512-Zp2xG3VTPHUquOcBaRtrr0/n7mqnjKUmprGcJXPEKGgP5rAsLymIfWKm3jIVWIw5Eb4fNOfX4v+L+qiSvs+OJw==}
 
   '@next/env@14.1.0':
     resolution: {integrity: sha512-Py8zIo+02ht82brwwhTg36iogzFqGLPXlRGKQw5s+qP/kMNc4MAyDeEwBKDijk6zTIbegEgu8Qy7C1LboslQAw==}
@@ -4281,7 +4281,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@next/bundle-analyzer@14.2.3':
+  '@next/bundle-analyzer@14.2.2':
     dependencies:
       webpack-bundle-analyzer: 4.10.1
     transitivePeerDependencies:

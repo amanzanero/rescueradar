@@ -10,10 +10,11 @@
     "db:generate": "drizzle-kit generate:pg",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "format": "prettier ./src/**/* -w"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "^14.2.3",
+    "@next/bundle-analyzer": "14.2.2",
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-email/components": "^0.0.16",
