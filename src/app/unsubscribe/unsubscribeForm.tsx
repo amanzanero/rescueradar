@@ -8,7 +8,7 @@ import { useFormState, useFormStatus } from "react-dom";
 export const UnsubscribeForm: React.FC = () => {
   const [state, formAction] = useFormState(unsubscribeUser, {});
   return (
-    <form className="w-full max-w-sm flex-col space-y-2" action={formAction}>
+    <form className="w-full flex-col space-y-2 sm:max-w-sm" action={formAction}>
       <Input name="email" type="email" placeholder="Email" className="w-full" />
       <UnsubscribeButton />
       {state.errors !== undefined && (
