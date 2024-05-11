@@ -5,9 +5,9 @@ import { env } from "@/env";
 export default {
   schema: "./src/server/db/schema.ts",
   out: "./drizzle",
-  driver: "pg",
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString: env.DATABASE_URL,
+    url: env.DATABASE_URL,
   },
   tablesFilter: ["rescueradar_*"],
 } satisfies Config;
